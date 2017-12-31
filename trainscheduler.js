@@ -1,86 +1,74 @@
 
-//initialize firebase
+  // alert("Tren Agrehhhhhgado!");
+
+
+  // Initiate Firebase
 
   var config = {
-    apiKey: "AIzaSyCH9VBppme9RMxJbIV18u_kMoxm-jj-FmM",
-    authDomain: "train-scheduler-9a7ad.firebaseapp.com",
-    databaseURL: "https://train-scheduler-9a7ad.firebaseio.com",
-    storageBucket: "",
+    apiKey: "AIzaSyA6N0uRiiMMDtYgpr-l4qhXDvGh-bDsicU",
+    authDomain: "test-2104e.firebaseapp.com",
+    databaseURL: "https://test-2104e.firebaseio.com",
+    storageBucket: "test-2104e.appspot.com",
   };
+  
+firebase.initializeApp(config);
 
-  firebase.initializeApp(config);
+var trainData = firebase.database();
 
-  var database = firebase.database();
 
-// 2.Button for adding train
-$("#add-train-btn").on("click",function(event){
-	event.preventDefault();
+// Grabbin train input
+$("#addTrainBtn").on("click",function(){
+	var trainName = $("#trainNameInput").val().trim();
+	var destination = $("#destinationInput").val().trim();
+	var firstTrain = moment($("#firstTrainInput").val().trim(),"HH:mm").subtract(10,"years").format("X");
+	var frequency = $("#frequencyInput").val().trim();
 
-	// Grabs train input
-	var traName = $("#train-name-input").val().trim();
-	var traDestination = $("#destination-input").val().trim();
-	var priTraName = moment($("#first-TraName-input").val().trim(), "DD/MM/YY").format("X");
-	var traFrecuency = $("#frecuency-input").val().trim();
-
-	// Local "temporary" object holding emp.data
-
+	// console.log(firstTrain);
+	// return false;
 	var newTrain = {
-		trainName: traName,
-		destination: traDestination,
-		firstTrainName: priTraName,
-		frecuency: traFrecuency
+		name: trainName,
+		destination: destination,
+		firstTrain: firstTrain,
+		frequency: frequency
 	};
 
-	// Uploads train data to the database
-	database.ref().push(newTrain);
+	trainData.ref().push(newTrain);
 
-	// // Logs everything to console
-	// console.log(newTrain.trainName);
-	// console.log(newTrain.destination);
-	// console.log(newTrain.firstTrainName);
-	// console.log(newTrain.frecuency);
+	// Logs everything to console
+	  // console.log(newTrain.name);
+	  // console.log(newTrain.destination);
+	  // console.log(newTrain.firstTrain);
+	  // console.log(newTrain.frequency);
 
-	// Alert
-	alert("Train succesfully added");
+	alert("Train added!");
 
-	// Clears all of the text-boxes
-	$("#train-name-input").val("");
-	$("#destination-input").val("");
-	$("#firstTraName-input").val("");
-	$("#frecuency-input").val("");
-	});
+	$("#trainNameInput").val("");
+	$("#destinationInput").val("");
+	$("#firstTrainInput").val("");
+	$("#frequencyInput").val("");
 
-	// Creates firebase event for adding train to the database and when the user adss an entry
-	database.ref().on("child_added", function(childSnapShot, prevChildKey) {
+	return false;
 
-	console.log(childSnapShot.val());
+});
 
-	// store everything into a var.
-	var traName = childSnapShot.val().trainName;
-	var traDestination = childSnapShot.val().destination;
-	var priTraName = childSnapShot.val().firstTrainName;
-	var traFrecuency = childSnapShot.val().frecuency;
+trainData.ref().on("child_added",function(snapshot){
+	var name = snapshot.val().name;
+	var destination = snapshot.val().destination;
+	var frequency = snapshot.val().frequency;
+	var firstTrain = snapshot.val().firstTrain;
 
-	//  Train info
-	// console.log(traName);
-	// console.log(traDestination);
-	// console.log(priTraName);
-	// console.log(traFrecuency);
+	var remainder = moment().diff(moment.unix(firstTrain),"minutes")%frequency;
+	var minutes = frequency - remainder;
+	var arrival = moment().add(minutes,"m").format("hh:mm A");
 
-	var differenceTimes = moment().diff(moment.unix(priTraName), "minutes");
-	var remainder = moment().dif(momment.unix(priTraName), "minutes") % traFrecuency;
-	var minutes = traFrecuency - remainder;
-
-	var arrival =  moment().add(minutes, "m").format("hh:mm A");
+	console.log(remainder);
 	console.log(minutes);
 	console.log(arrival);
-	console.log(moment().format("hh:mm A"));
-    console.log(arrival);
-    console.log(moment().format("X"));
 
-    // Append train data to table 
-    $("#trainSchedule > tbody").append("<tr><td>" + traName + "</td><td>" + traDestination + "</td><td>" + priTraName + "</td><td>" + arrival + "</td><td>" + minutes + "</td></tr>");
-});
+	$("#trainTable > tBody").append("<tr><td>"+name+"</td><td>"+destination+"</td><td>"+frequency+"</td><td>"+arrival+"</td><td>"+minutes+"</td></tr>");
+
+})
+
 
 
 
