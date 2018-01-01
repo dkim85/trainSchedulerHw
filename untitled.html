@@ -11,11 +11,12 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <!-- Jquery -->
-  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<!-- Firebase reference -->
 	<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
 	<!-- Moment.js library -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+
 
 </head>
 
@@ -63,22 +64,22 @@
         <div class="panel-body">
           <form>
             <div class="form-group">
-              <label for="">Train Name</label>
-              <input type="text" class"form-control" name="trainNameInput">
+              <label for="trainNameInput">Train Name</label>
+              <input type="text" class="form-control" id="trainNameInput">
             </div>
             <div class="form-group">
-              <label for="">Destination</label>
-              <input type="text" class"form-control" name="destinationInput">
+              <label for="destinationInput">Destination</label>
+              <input type="text" class="form-control" id="destinationInput">
             </div>
             <div class="form-group">
-              <label for="">First Train Time (HH:mm - Military Time)</label>
-              <input type="text" class"form-control" name="firstTrainInput">
+              <label for="firstTrainInput">First Train Time (HH:mm - Military Time)</label>
+              <input type="text" class="form-control" id="firstTrainInput">
             </div>
             <div class="form-group">
-              <label for="">Frequency (Min)</label>
-              <input type="text" class"form-control" name="frecuencyInput">
+              <label for="frequencyInput">Frequency (Min)</label>
+              <input type="text" class="form-control" id="frequencyInput">
             </div>
-            <button type="submit" class"btn btn-primary" id="addTrainBtn">Submit!</button>
+            <button type="submit" class="btn btn-primary" id="addTrainBtn">Submit!</button>
           </form>
       </div>
     </div>
@@ -86,7 +87,7 @@
 </div>
 </div>
 
-      </div> -->
+ 
 
 <!-- JavaScript external file js -->
   <script src="trainscheduler.js"></script>
